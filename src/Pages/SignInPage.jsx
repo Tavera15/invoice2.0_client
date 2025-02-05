@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import HomeNav from "../Components/HomeNav";
+import LoginForm from "../Forms/LoginForm";
+import SignUpForm from "../Forms/SignupForm";
 
-function HomePage()
+function SignInPage()
 {
+    const [showLogin, setShowLogin] = useState(true);
+
+    const displayLogin = () => setShowLogin(true);
+    const displaySignup = () => setShowLogin(false);
 
     return(
         <div className="d-flex">
@@ -18,19 +24,15 @@ function HomePage()
                     "overflow": "hidden",
                     "overflowY": "scroll",
                     "flexWrap": "wrap"}}>
-                
-                <div className="text-light col-12 col-md-8 rounded bg-dark border p-4"
-                    style={{"filter": "brightness(1)", opacity: .95}}>
-                    <h1 className="display-1">Tavera Invoice</h1>
-                    <hr />
-                    <h3>Your personal invoice book that allows you to instantly make invoices straight from your web browser.</h3>
-                </div>
+
+                {
+                    showLogin
+                        ? <LoginForm switchDisplay = {displaySignup} />
+                        : <SignUpForm switchDisplay = {displayLogin} />
+                }
             </div>
         </div>
-    )
+    );
 }
 
-export default HomePage;
-
-//https://1.bp.blogspot.com/-hqjU2x-AbTY/YH8VK8jiGoI/AAAAAAAABE0/IVdksicp9KYxvhM5iYtS8Wp0r2RnvoYmwCLcBGAsYHQ/s1280/Side%2BNavigation%2BMenu%2BBar%2Bin%2BHTML%2BCSS.webp
-// https://d3h2k7ug3o5pb3.cloudfront.net/image/2020-12-07/a1985720-3865-11eb-bcbe-7daa1ab28fd4.jpg
+export default SignInPage;

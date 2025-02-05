@@ -8,7 +8,7 @@ function AboutPage()
         <div className="d-flex">
             <HomeNav />
 
-            <div className="col-md-9 text-light d-flex  justify-content-center align-items-start p-4" 
+            <div className="col-md-9 text-light d-flex col justify-content-center align-items-start p-4" 
                     style={{"backgroundImage": "url(https://img.freepik.com/premium-photo/cozy-home-office-with-desk-computer-warm-lighting-vector-illustration-flat-style_1029473-422475.jpg)", 
                     "height": "100vh",
                     "filter": "brightness(.8)",
@@ -19,8 +19,6 @@ function AboutPage()
                     "overflowY": "scroll",
                     "flexWrap": "wrap"}}>
 
-            {/* <div className="col-md-9 d-flex justify-content-center align-items-center p-4" style={{height: "100vh"}}> */}
-                
                 <div className="col-12 col-md-12 rounded bg-dark border p-4 mb-2"
                     style={{"filter": "brightness(1)", opacity: .95}}>
                     <h1 className="display-1">About</h1>

@@ -23,7 +23,7 @@ function HomeNav()
                     <Nav className="d-flex row justify-content-center flex-grow-1 pe-3">
                         <Link className="text-light display-4" to="/">Home</Link>
                         <Link className="text-light display-4" to="/About">About</Link>
-                        <Link className="text-light display-4" to="/">Login / Sign Up</Link>
+                        <Link className="text-light display-4" to="/SignIn">Login / Sign Up</Link>
                     </Nav>
                 </Offcanvas.Body>
                 </Navbar.Offcanvas>
