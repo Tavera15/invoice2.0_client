@@ -1,27 +1,26 @@
 import React from "react";
-import bg from "../assets/invoicehome.jpg";
+import HomeNav from "../Components/HomeNav";
 
 function HomePage()
 {
+
     return(
         <div className="d-flex">
-            <div className="d-flex text-light col-3 bg-danger justify-content-center align-items-center">
-                <h1>Nav</h1>
-            </div>
+            <HomeNav />
 
-            <div className="col-9 text-light d-flex justify-content-center align-items-center" 
+            <div className="col-md-9 text-light d-flex justify-content-center align-items-center p-4" 
                     style={{"backgroundImage": "url(https://img.freepik.com/premium-photo/cozy-home-office-with-desk-computer-warm-lighting-vector-illustration-flat-style_1029473-422475.jpg)", 
                     "height": "100vh",
                     "filter": "brightness(.8)",
                     "backgroundPosition": "center", 
                     "backgroundSize": "cover", 
                     "backgroundRepeat": "no-repeat"}}>
-
+                
                 <div className="text-light rounded bg-dark border p-4"
                     style={{"filter": "brightness(1)", opacity: .95}}>
                     <h1 className="display-1">Tavera Invoice</h1>
                     <hr />
-                    <h5>Lets you instantly make Invoices with our attractive invoice template straight from your web browser.</h5>
+                    <h3>Your personal invoice book that allows you to instantly make invoices straight from your web browser.</h3>
                 </div>
             </div>
         </div>
