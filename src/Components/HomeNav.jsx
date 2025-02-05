@@ -22,8 +22,8 @@ function HomeNav()
                 <Offcanvas.Body className="bg-danger text-light">
                     <Nav className="d-flex row justify-content-center flex-grow-1 pe-3">
                         <Link className="text-light display-4" to="/">Home</Link>
-                        <Link className="text-light display-4" to="/">About</Link>
-                        <Link className="text-light display-4" to="/">Sign In</Link>
+                        <Link className="text-light display-4" to="/About">About</Link>
+                        <Link className="text-light display-4" to="/">Login / Sign Up</Link>
                     </Nav>
                 </Offcanvas.Body>
                 </Navbar.Offcanvas>

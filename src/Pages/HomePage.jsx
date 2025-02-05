@@ -14,9 +14,12 @@ function HomePage()
                     "filter": "brightness(.8)",
                     "backgroundPosition": "center", 
                     "backgroundSize": "cover", 
-                    "backgroundRepeat": "no-repeat"}}>
+                    "backgroundRepeat": "no-repeat",
+                    "overflow": "hidden",
+                    "overflowY": "scroll",
+                    "flexWrap": "wrap"}}>
                 
-                <div className="text-light rounded bg-dark border p-4"
+                <div className="text-light col-12 col-md-8 rounded bg-dark border p-4"
                     style={{"filter": "brightness(1)", opacity: .95}}>
                     <h1 className="display-1">Tavera Invoice</h1>
                     <hr />
