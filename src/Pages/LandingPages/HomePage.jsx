@@ -1,5 +1,5 @@
 import React from "react";
-import HomeNav from "../Components/HomeNav";
+import HomeNav from "../../Components/LandingNav";
 
 function HomePage()
 {
@@ -8,16 +8,10 @@ function HomePage()
         <div className="d-flex">
             <HomeNav />
 
-            <div className="col-md-9 text-light d-flex col justify-content-center align-items-center p-4" 
-                    style={{"backgroundImage": "url(https://img.freepik.com/premium-photo/cozy-home-office-with-desk-computer-warm-lighting-vector-illustration-flat-style_1029473-422475.jpg)", 
-                    "height": "100vh",
-                    "filter": "brightness(.8)",
-                    "backgroundPosition": "center", 
-                    "backgroundSize": "cover", 
-                    "backgroundRepeat": "no-repeat",
-                    "overflow": "hidden",
-                    "overflowY": "scroll",
-                    "flexWrap": "wrap"}}>
+            <div className="work-area-base col-md-9 text-light d-flex col justify-content-center align-items-center p-4" 
+                    style={{
+                    "backgroundImage": "url(https://img.freepik.com/premium-photo/cozy-home-office-with-desk-computer-warm-lighting-vector-illustration-flat-style_1029473-422475.jpg)", 
+                    "filter": "brightness(.8)",}}>
                 
                 <div className="text-light col-12 col-md-8 rounded bg-dark border p-4"
                     style={{"filter": "brightness(1)", opacity: .95}}>

@@ -2,7 +2,7 @@ import React from "react";
 import { Offcanvas, Navbar, Container, Nav} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function HomeNav()
+function LandingNav()
 {
     const expand = "md"
 
@@ -20,10 +20,10 @@ function HomeNav()
                 <Offcanvas.Header closeButton className="bg-danger text-light">
                 </Offcanvas.Header>
                 <Offcanvas.Body className="bg-danger text-light">
-                    <Nav className="d-flex row justify-content-center flex-grow-1 pe-3">
-                        <Link className="text-light display-4" to="/">Home</Link>
-                        <Link className="text-light display-4" to="/About">About</Link>
-                        <Link className="text-light display-4" to="/SignIn">Login / Sign Up</Link>
+                    <Nav className="d-flex row justify-content-center">
+                        <Link className="text-light display-4 undeline-on-hover" to="/">Home</Link>
+                        <Link className="text-light display-4 undeline-on-hover" to="/About">About</Link>
+                        <Link className="text-light display-4 undeline-on-hover" to="/SignIn">Login / Sign Up</Link>
                     </Nav>
                 </Offcanvas.Body>
                 </Navbar.Offcanvas>
@@ -32,4 +32,4 @@ function HomeNav()
     );
 }
 
-export default HomeNav;
+export default LandingNav;
