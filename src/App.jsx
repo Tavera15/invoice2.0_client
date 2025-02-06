@@ -6,6 +6,7 @@ import AboutPage from './Pages/LandingPages/AboutPage';
 import SignInPage from './Pages/LandingPages/SignInPage';
 import DashboardPage from './Pages/AccountPages/DashboardPage';
 import BusinessPage from './Pages/AccountPages/BusinessPage';
+import InvoicePage from './Pages/AccountPages/InvoicePage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
                   <Route exact path="/Account/Dashboard" element={<DashboardPage />} />
                   <Route exact path="/Account/Business" element={<BusinessPage />} />
+                  <Route exact path="/Account/Invoice" element={<InvoicePage />} />
               </Routes>
           </Router>
       </div>

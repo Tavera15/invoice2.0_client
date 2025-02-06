@@ -28,8 +28,8 @@ function BusinessPage()
                     </div>              
                     <div className="d-flex col flex-wrap work-area-base" 
                         style={{
-                            "height": "0",
-                            "minHeight": "65vh"
+                            "height": "100%",
+                            "maxHeight": "65vh"
                         }}>
                         <CustomerProfile />
                         <CustomerProfile />
@@ -59,8 +59,8 @@ function BusinessPage()
                     </div> 
                     <div className="d-flex col flex-wrap work-area-base" 
                         style={{
-                            "height": "0",
-                            "minHeight": "65vh"
+                            "height": "100%",
+                            "maxHeight": "65vh"
                         }}>
                         <ProductServiceProfile />
                     </div>
