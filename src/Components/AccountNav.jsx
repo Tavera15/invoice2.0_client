@@ -23,8 +23,7 @@ function AccountNav()
                     <Nav className="d-flex row">
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Dashboard">Dashboard</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/SignIn">Invoices</Link>
-                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/About">Customers</Link>
-                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/About">Businesses</Link>
+                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Business">Businesses</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/About">Profile</Link>
                     </Nav>
                 </Offcanvas.Body>
