@@ -14,19 +14,22 @@ function BusinessForm()
     const [zipCode, setZipCode]             = useState("");
 
     return(
-        <Form className="col-12 col-md-8" onSubmit={(e) => SubmitOrder(e)}>
+        <Form className="col-12 col-md-10 col-lg-6" onSubmit={(e) => SubmitOrder(e)}>
             <div className="form-row row">
-                <div className="form-group col-md-4 mt-3">
+                <div className="form-group col-md-6 mt-3">
                     <label htmlFor="inputName">Name</label>
                     <input required value={name || ""} onChange={(e) => setName(e.target.value)} type="text" className="form-control" id="inputName" placeholder="Name" />
                 </div>
-                <div className="form-group col-md-4 mt-3">
-                    <label htmlFor="inputEmail">Email</label>
-                    <input required value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="inputEmail" placeholder="Email" />
-                </div>
-                <div className="form-group col-md-4 mt-3">
+                
+                <div className="form-group col-md-6 mt-3">
                     <label htmlFor="inputPhone">Telephone</label>
                     <input required value={phone || ""} onChange={(e) => setPhone(e.target.value)} type="telephone" className="form-control" id="inputPhone" placeholder="123-456-7890" />
+                </div>
+            </div>
+            <div className="form-row row">
+                <div className="form-group mt-3">
+                    <label htmlFor="inputEmail">Email</label>
+                    <input required value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="inputEmail" placeholder="Email" />
                 </div>
             </div>
             <div className="form-group mt-3 mt-3">
