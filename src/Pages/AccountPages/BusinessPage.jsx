@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountNav from "../../Components/AccountNav";
 import BusinessForm from "../../Forms/BusinessForm";
 import CustomerProfile from "../../Components/Profiles/CustomerProfile";
 import ProductServiceProfile from "../../Components/Profiles/ProductServiceProfile";
 import { Button } from "react-bootstrap";
+import CustomerModal from "../../Modals/CustomerModal";
 
 function BusinessPage()
 {
+    const [showCustomerModal, setCustomerModal] = useState(false);
+
     return(
         <div className="d-flex">
             <AccountNav />
@@ -24,7 +27,9 @@ function BusinessPage()
                 <div>  
                     <div className="d-flex col justify-content-between align-items-center">
                         <h1 className="text-start m-0">Customers</h1>
-                        <Button variant="info">Create New</Button>
+                        
+                        <Button onClick={() => setCustomerModal(true)} variant="info">Create New</Button>
+                        <CustomerModal show={showCustomerModal} onHide={() => setCustomerModal(false)} />
                     </div>              
                     <div className="d-flex col flex-wrap work-area-base" 
                         style={{
