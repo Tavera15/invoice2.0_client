@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountNav from "../../Components/AccountNav";
 import InvoiceBookProfile from "../../Components/Profiles/InvoiceBookProfile";
 import BusinessProfile from "../../Components/Profiles/BusinessProfile";
 import { Button } from "react-bootstrap";
+import BusinessModal from "../../Modals/BusinessModal";
 
 function DashboardPage()
 {
+    const [showModal, setShowModal] = useState(false);
+
     return(
         <div className="d-flex">
             <AccountNav />
@@ -30,7 +33,9 @@ function DashboardPage()
                         <hr />
                         <div className="d-flex col justify-content-between align-items-center">
                             <h2 className="text-start m-0">Businesses</h2>
-                            <Button variant="info">Create New</Button>
+
+                            <Button onClick={() => setShowModal(true)} variant="info">Create New</Button>
+                            <BusinessModal show={showModal} onHide={() => setShowModal(false)} />
                         </div>
                         <div className="d-flex col flex-wrap container">
                             <BusinessProfile />
