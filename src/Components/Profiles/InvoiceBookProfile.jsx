@@ -12,7 +12,7 @@ function InvoiceBookProfile()
                     <Card.Text>Invoice Count: 12</Card.Text>
                     <div className="d-flex row">
                         <Button className="my-2" variant="success">Create Invoice</Button>
-                        <Button variant="primary">Edit</Button>
+                        <Button variant="primary">View</Button>
                     </div>
                 </Card.Body>
             </Card>

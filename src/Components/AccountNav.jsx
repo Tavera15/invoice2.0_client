@@ -23,6 +23,7 @@ function AccountNav()
                     <Nav className="d-flex row">
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Dashboard">Dashboard</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Invoice">Invoices</Link>
+                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/InvoiceBook">Invoice Book</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Business">Business</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/About">Profile</Link>
                     </Nav>

@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import AccountNav from "../../Components/AccountNav";
 import InvoiceBookProfile from "../../Components/Profiles/InvoiceBookProfile";
 import BusinessProfile from "../../Components/Profiles/BusinessProfile";
-import { Button } from "react-bootstrap";
 import BusinessPageModal from "../../Modals/BusinessPageModal";
 import BusinessForm from "../../Forms/BusinessForm";
+import InvoiceBookForm from "../../Forms/InvoiceBookForm";
 
 function DashboardPage()
 {
-    const [showModal, setShowModal] = useState(false);
+    const [showInvoiceBookModal, setShowInvoiceBookModal] = useState(false);
+    const [showBusinessModal, setShowBusinessModal] = useState(false);
 
     return(
         <div className="d-flex">
@@ -22,7 +23,13 @@ function DashboardPage()
                         <hr />
                         <div className="d-flex col justify-content-between align-items-center">
                             <h2 className="text-start m-0">Invoice Books</h2>
-                            <Button variant="info">Create New</Button>
+                            <BusinessPageModal
+                                title="Create New Invoice Book"
+                                openModal={() => setShowInvoiceBookModal(true)}
+                                form={InvoiceBookForm} 
+                                show={showInvoiceBookModal} 
+                                onHide={() => setShowInvoiceBookModal(false)} 
+                            />
                         </div>
                         <div className="d-flex col flex-wrap container">
                             <InvoiceBookProfile />
@@ -37,10 +44,10 @@ function DashboardPage()
 
                             <BusinessPageModal
                                 title="Create New Business"
-                                openModal={() => setShowModal(true)}
+                                openModal={() => setShowBusinessModal(true)}
                                 form={BusinessForm} 
-                                show={showModal} 
-                                onHide={() => setShowModal(false)} 
+                                show={showBusinessModal} 
+                                onHide={() => setShowBusinessModal(false)} 
                             />
                         </div>
                         <div className="d-flex col flex-wrap container">

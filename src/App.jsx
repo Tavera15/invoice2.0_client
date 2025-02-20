@@ -7,6 +7,7 @@ import SignInPage from './Pages/LandingPages/SignInPage';
 import DashboardPage from './Pages/AccountPages/DashboardPage';
 import BusinessPage from './Pages/AccountPages/BusinessPage';
 import InvoicePage from './Pages/AccountPages/InvoicePage';
+import InvoiceBookManager from './Pages/AccountPages/InvoiceBookManager';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                   <Route exact path="/Account/Dashboard" element={<DashboardPage />} />
                   <Route exact path="/Account/Business" element={<BusinessPage />} />
                   <Route exact path="/Account/Invoice" element={<InvoicePage />} />
+                  <Route exact path="/Account/InvoiceBook" element={<InvoiceBookManager />} />
               </Routes>
           </Router>
       </div>
