@@ -3,7 +3,8 @@ import AccountNav from "../../Components/AccountNav";
 import InvoiceBookProfile from "../../Components/Profiles/InvoiceBookProfile";
 import BusinessProfile from "../../Components/Profiles/BusinessProfile";
 import { Button } from "react-bootstrap";
-import BusinessModal from "../../Modals/BusinessModal";
+import BusinessPageModal from "../../Modals/BusinessPageModal";
+import BusinessForm from "../../Forms/BusinessForm";
 
 function DashboardPage()
 {
@@ -34,8 +35,13 @@ function DashboardPage()
                         <div className="d-flex col justify-content-between align-items-center">
                             <h2 className="text-start m-0">Businesses</h2>
 
-                            <Button onClick={() => setShowModal(true)} variant="info">Create New</Button>
-                            <BusinessModal show={showModal} onHide={() => setShowModal(false)} />
+                            <BusinessPageModal
+                                title="Create New Business"
+                                openModal={() => setShowModal(true)}
+                                form={BusinessForm} 
+                                show={showModal} 
+                                onHide={() => setShowModal(false)} 
+                            />
                         </div>
                         <div className="d-flex col flex-wrap container">
                             <BusinessProfile />

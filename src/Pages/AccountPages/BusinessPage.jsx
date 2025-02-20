@@ -3,12 +3,14 @@ import AccountNav from "../../Components/AccountNav";
 import BusinessForm from "../../Forms/BusinessForm";
 import CustomerProfile from "../../Components/Profiles/CustomerProfile";
 import ProductServiceProfile from "../../Components/Profiles/ProductServiceProfile";
-import { Button } from "react-bootstrap";
-import CustomerModal from "../../Modals/CustomerModal";
+import BusinessPageModal from "../../Modals/BusinessPageModal";
+import ServiceForm from "../../Forms/ServiceForm";
+import CustomerForm from "../../Forms/CustomerForm";
 
 function BusinessPage()
 {
     const [showCustomerModal, setCustomerModal] = useState(false);
+    const [showServiceModal, setServiceModal] = useState(false);
 
     return(
         <div className="d-flex">
@@ -28,8 +30,13 @@ function BusinessPage()
                     <div className="d-flex col justify-content-between align-items-center">
                         <h1 className="text-start m-0">Customers</h1>
                         
-                        <Button onClick={() => setCustomerModal(true)} variant="info">Create New</Button>
-                        <CustomerModal show={showCustomerModal} onHide={() => setCustomerModal(false)} />
+                        <BusinessPageModal
+                            title="Create New Customer"
+                            openModal={() => setCustomerModal(true)}
+                            form={CustomerForm} 
+                            show={showCustomerModal} 
+                            onHide={() => setCustomerModal(false)} 
+                        />
                     </div>              
                     <div className="d-flex col flex-wrap work-area-base" 
                         style={{
@@ -60,7 +67,14 @@ function BusinessPage()
                 <div>  
                     <div className="d-flex col justify-content-between align-items-center">
                         <h1 className="text-start m-0">Services</h1>
-                        <Button variant="info">Create New</Button>
+
+                        <BusinessPageModal 
+                            title="Create New Product/Service"
+                            openModal={() => setServiceModal(true)}
+                            form={ServiceForm} 
+                            show={showServiceModal} 
+                            onHide={() => setServiceModal(false)} 
+                        />
                     </div> 
                     <div className="d-flex col flex-wrap work-area-base" 
                         style={{
