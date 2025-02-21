@@ -1,9 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function BusinessForm(props)
 {
+    const token = useSelector(state => state.token.value);
+
     const [name, setName]                   = useState("");
     const [email, setEmail]                 = useState("");
     const [phone, setPhone]                 = useState("");
@@ -11,7 +15,21 @@ function BusinessForm(props)
     const [addressLine2, setAddress2]       = useState("");
     const [city, setCity]                   = useState("");
     const [state, setState]                 = useState("");
-    const [zipCode, setZipCode]             = useState("");
+    const [zip, setZipCode]                 = useState("");
+
+    useEffect(() => {
+        if(props.bizz)
+        {
+            setName(props.bizz.name);
+            setEmail(props.bizz.email);
+            setPhone(props.bizz.phone);
+            setAddress1(props.bizz.addressLine1);
+            setAddress2(props.bizz.addressLine2);
+            setCity(props.bizz.city);
+            setState(props.bizz.state);
+            setZipCode(props.bizz.zip);
+        }
+    }, [])
 
     function submitBusiness(e)
     {
@@ -25,15 +43,26 @@ function BusinessForm(props)
             addressLine2,
             city,
             state,
-            zipCode
+            zip
+        }
+
+        if(props.bizz)
+        {
+            axios.put(import.meta.env.VITE_SERVER_API + "/Business/UpdateBusiness/" + props.bizz._id, data, {headers: {Authorization: token}})
+                .then(() => location.reload())
+                .catch((err) => console.log(err))
+        }
+        else
+        {
+            axios.post(import.meta.env.VITE_SERVER_API + "/Business/CreateNewBusiness/", data, {headers: {Authorization: token}})
+                .then(() => location.reload())
+                .catch((err) => console.log(err))
         }
 
         if(props.hideModal)
         {
             props.hideModal();
         }
-
-        console.log(data);
     }
 
     return(
@@ -75,7 +104,7 @@ function BusinessForm(props)
                     </div>
                     <div className="form-group col-md-4 mt-3">
                         <label htmlFor="inputZip">Zip</label>
-                        <input required value={zipCode || ""} onChange={(e) => setZipCode(e.target.value)} type="text" className="form-control" id="inputZip" />
+                        <input required value={zip || ""} onChange={(e) => setZipCode(e.target.value)} type="text" className="form-control" id="inputZip" />
                     </div>
 
                     <div>

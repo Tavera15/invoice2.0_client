@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function BusinessProfile({id})
 {
@@ -36,7 +37,7 @@ function BusinessProfile({id})
                                     Customer count: {bizz.customers.length}
                                 </Card.Text>
                                 <div className="d-flex row">
-                                    <Button className="my-2" variant="primary">View</Button>
+                                    <Link className="btn btn-primary my-2" to={"/Account/Business/" + id}>View</Link>
                                     <Button variant="danger">Delete</Button>
                                 </div>
                             </Card.Body>

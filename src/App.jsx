@@ -28,7 +28,7 @@ function App() {
                     }
                 />
                 <Route 
-                    exact path="/Account/Business"
+                    exact path="/Account/Business/:id"
                     element={
                     <PrivateRoute>
                         <BusinessPage />
