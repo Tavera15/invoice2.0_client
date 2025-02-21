@@ -1,6 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import './App.css'
+import PrivateRoute from './Components/PrivateRoute';
 import HomePage from './Pages/LandingPages/HomePage';
 import AboutPage from './Pages/LandingPages/AboutPage';
 import SignInPage from './Pages/LandingPages/SignInPage';
@@ -14,14 +15,42 @@ function App() {
       <div>
           <Router>
               <Routes>
-                  <Route exact path="/" element={<HomePage />} />
-                  <Route exact path="/About" element={<AboutPage />} />
-                  <Route exact path="/SignIn" element={<SignInPage />} />
+                <Route exact path="/" element={<HomePage />} />
+                <Route exact path="/About" element={<AboutPage />} />
+                <Route exact path="/SignIn" element={<SignInPage />} />
 
-                  <Route exact path="/Account/Dashboard" element={<DashboardPage />} />
-                  <Route exact path="/Account/Business" element={<BusinessPage />} />
-                  <Route exact path="/Account/Invoice" element={<InvoicePage />} />
-                  <Route exact path="/Account/InvoiceBook" element={<InvoiceBookManager />} />
+                <Route 
+                    exact path="/Account/Dashboard"
+                    element={
+                    <PrivateRoute>
+                        <DashboardPage />
+                    </PrivateRoute>
+                    }
+                />
+                <Route 
+                    exact path="/Account/Business"
+                    element={
+                    <PrivateRoute>
+                        <BusinessPage />
+                    </PrivateRoute>
+                    }
+                />
+                <Route 
+                    exact path="/Account/Invoice"
+                    element={
+                    <PrivateRoute>
+                        <InvoicePage />
+                    </PrivateRoute>
+                    }
+                />
+                <Route 
+                    exact path="/Account/InvoiceBook"
+                    element={
+                    <PrivateRoute>
+                        <InvoiceBookManager />
+                    </PrivateRoute>
+                    }
+                />
               </Routes>
           </Router>
       </div>

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-// import { useSelector, useDispatch } from 'react-redux';
-// import { userSignup } from "../Features/TokenSlice";
+import { useDispatch } from 'react-redux';
+import { userSignup } from "../Features/TokenSlice";
+import { useNavigate } from "react-router-dom";
 
 function SignUpForm({switchDisplay})
 {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // const token = useSelector((state) => state.token.value);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     async function onSignup(e)
     {
@@ -20,13 +22,17 @@ function SignUpForm({switchDisplay})
         if(password === confirmPassword)
         {
             const data = {
-                name: "",
+                name: name,
                 email: email,
                 password: confirmPassword
             }
 
             dispatch(userSignup(data));
-            console.log(token)
+            navigate("/Account/Dashboard");
+        }
+        else
+        {
+            alert("Passwords do not match");
         }
     }
 
@@ -36,16 +42,20 @@ function SignUpForm({switchDisplay})
             <hr/>
             <Form onSubmit={(e) => onSignup(e)}>
                 <div className="mb-3">
+                    <label htmlFor="signup-name" className="form-label">Name</label>
+                    <input required onChange={(e) => setName(e.target.value)} type="text" className="form-control" id="signup-name"/>
+                </div>
+                <div className="mb-3">
                     <label htmlFor="signup-email" className="form-label">Email address</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="signup-email" aria-describedby="emailHelp" />
+                    <input required onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="signup-email" aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="signup-password" className="form-label">Password</label>
-                    <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="signup-password" />
+                    <input required onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="signup-password" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="signup-confirm-password" className="form-label">Confirm Password</label>
-                    <input onChange={(e) => setConfirmPassword(e.target.value)} type="password" className="form-control" id="signup-confirm-password" />
+                    <input required onChange={(e) => setConfirmPassword(e.target.value)} type="password" className="form-control" id="signup-confirm-password" />
                 </div>
                 <Button type="submit" variant="outline-light">Register</Button>
             </Form>

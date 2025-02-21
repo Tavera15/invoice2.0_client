@@ -10,7 +10,8 @@ function BusinessPageModal(props)
             <Button onClick={() => props.openModal(true)} variant="info">Create New</Button>
 
             <Modal
-                {...props}
+                show={props.show}
+                onHide={props.onHide}
                 backdrop="static"
                 keyboard={false}
                 size="lg"

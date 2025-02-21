@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-// import { useDispatch } from 'react-redux';
-// import { userLogin } from "../Features/TokenSlice";
+
+import { useDispatch } from 'react-redux';
+import { userLogin } from "../Features/TokenSlice";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm({switchDisplay})
@@ -9,8 +10,8 @@ function LoginForm({switchDisplay})
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     async function onLogin(e)
     {
@@ -22,7 +23,7 @@ function LoginForm({switchDisplay})
         }
         
         await dispatch(userLogin(data));
-        navigate("/Account/Profile");
+        navigate("/Account/Dashboard");
     }
 
     return(
@@ -32,11 +33,11 @@ function LoginForm({switchDisplay})
             <Form onSubmit={(e) => onLogin(e)}>
                 <div className="mb-3">
                     <label htmlFor="login-email" className="form-label">Email address</label>
-                    <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="login-email" aria-describedby="emailHelp" />
+                    <input required onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="login-email" aria-describedby="emailHelp" />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="login-password" className="form-label">Password</label>
-                    <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="login-password" />
+                    <input required onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="login-password" />
                 </div>
                 <Button className="mb-4" type="submit" variant="outline-light">Login</Button>
                 <p className="text-decoration-underline" onClick={() => switchDisplay()} role="button">Sign up for free!</p>
