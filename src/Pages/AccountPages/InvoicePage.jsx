@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import AccountNav from "../../Components/AccountNav";
-import CustomerProfile from "../../Components/Profiles/CustomerProfile";
-import ProductServiceProfile from "../../Components/Profiles/ProductServiceProfile";
 import { Button, Form, Table } from "react-bootstrap";
 
 function InvoicePage()
@@ -19,7 +17,7 @@ function InvoicePage()
         <div className="d-flex">
             <AccountNav />
 
-            <div className="col-md-9 p-4 min-vh-100 work-area-base">
+            <Form className="col-md-9 p-4 min-vh-100 work-area-base">
                 <h1 className="display-1">Invoices</h1>
                 
                 <hr />
@@ -250,14 +248,14 @@ function InvoicePage()
                                 <div className="justify-content-end align-items-end d-flex">
                                     <div className="d-flex col my-4 justify-content-between">
                                         <Button variant="warning" className="col-5">Draft</Button>
-                                        <Button variant="success" className="col-5">Generate</Button>
+                                        <Button type="submit" variant="success" className="col-5">Generate</Button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Form>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function InvoiceBookProfile({id})
 {
@@ -36,7 +37,7 @@ function InvoiceBookProfile({id})
                                 <Card.Text>Invoice Count: {book.invoices.length}</Card.Text>
                                 <div className="d-flex row">
                                     <Button className="my-2" variant="success">Create Invoice</Button>
-                                    <Button variant="primary">View</Button>
+                                    <Link className="btn btn-primary my-2" to={"/Account/InvoiceBook/" + id}>View</Link>
                                 </div>
                             </Card.Body>
                         </Card>

@@ -44,7 +44,7 @@ function App() {
                     }
                 />
                 <Route 
-                    exact path="/Account/InvoiceBook"
+                    exact path="/Account/InvoiceBook/:id"
                     element={
                     <PrivateRoute>
                         <InvoiceBookManager />
