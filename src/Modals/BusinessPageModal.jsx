@@ -25,7 +25,7 @@ function BusinessPageModal(props)
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <BizzForm hideModal={() => props.onHide()} />
+                    <BizzForm origin={props.origin} hideModal={() => props.onHide()} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Close</Button>

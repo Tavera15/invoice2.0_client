@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import BusinessPageModal from "../../Modals/BusinessPageModal";
 import CustomerForm from "../../Forms/CustomerForm";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
@@ -48,6 +48,7 @@ function CustomerProfile({customerId})
                                         show={showCustomerModal} 
                                         onHide={() => setCustomerModal(false)}
                                         btnText="Edit"
+                                        origin={customer}
                                     />
                 
                                     <div className="mt-2"></div>

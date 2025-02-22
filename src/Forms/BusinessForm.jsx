@@ -18,16 +18,16 @@ function BusinessForm(props)
     const [zip, setZipCode]                 = useState("");
 
     useEffect(() => {
-        if(props.bizz)
+        if(props.origin)
         {
-            setName(props.bizz.name);
-            setEmail(props.bizz.email);
-            setPhone(props.bizz.phone);
-            setAddress1(props.bizz.addressLine1);
-            setAddress2(props.bizz.addressLine2);
-            setCity(props.bizz.city);
-            setState(props.bizz.state);
-            setZipCode(props.bizz.zip);
+            setName(props.origin.name);
+            setEmail(props.origin.email);
+            setPhone(props.origin.phone);
+            setAddress1(props.origin.addressLine1);
+            setAddress2(props.origin.addressLine2);
+            setCity(props.origin.city);
+            setState(props.origin.state);
+            setZipCode(props.origin.zip);
         }
     }, [])
 

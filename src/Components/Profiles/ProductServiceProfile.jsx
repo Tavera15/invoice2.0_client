@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
@@ -44,6 +44,7 @@ function ProductServiceProfile({PS_Id})
                             show={showCustomerModal} 
                             onHide={() => setCustomerModal(false)}
                             btnText="Edit"
+                            origin={ps}
                         />
                         
                         <div className="mt-2"></div>

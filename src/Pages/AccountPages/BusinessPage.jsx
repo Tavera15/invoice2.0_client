@@ -51,7 +51,7 @@ function BusinessPage()
                             <hr />
                             <div className="d-flex justify-content-center row text-start">
                                 <h1>Business Info</h1>
-                                <BusinessForm bizz={bizz} />
+                                <BusinessForm origin={bizz} />
                             </div>
             
                             <hr />

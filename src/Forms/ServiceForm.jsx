@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -12,17 +12,33 @@ function ServiceForm(props)
     const token = useSelector(state => state.token.value);
     const {id} = useParams();
 
+    useEffect(() => {
+        if(props.origin)
+        {
+            setName(props.origin.name);
+            setPrice(props.origin.price);
+            setDesc(props.origin.description);
+        }
+    }, [])
+
     function submitService(e)
     {
         e.preventDefault();
 
         const data = {name, price, description};
 
-        axios.post(import.meta.env.VITE_SERVER_API + "/Business/CreateNewProductService/" + id, data, {headers: {Authorization: token}})
-            .then(() => {
-                location.reload();
-            })
-            .catch((err) => console.log(err))
+        if(props.origin)
+        {
+            axios.put(import.meta.env.VITE_SERVER_API + `/Business/UpdateProductService/${id}/${props.origin._id}`, data, {headers: {Authorization: token}})
+                .then(() => location.reload())
+                .catch((err) => console.log(err))
+        }
+        else
+        {
+            axios.post(import.meta.env.VITE_SERVER_API + "/Business/CreateNewProductService/" + id, data, {headers: {Authorization: token}})
+                .then(() => location.reload())
+                .catch((err) => console.log(err))
+        }
 
         if(props.hideModal)
         {
