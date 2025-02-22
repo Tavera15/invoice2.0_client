@@ -64,7 +64,8 @@ function BusinessPage()
                                         openModal={() => setCustomerModal(true)}
                                         form={CustomerForm} 
                                         show={showCustomerModal} 
-                                        onHide={() => setCustomerModal(false)} 
+                                        onHide={() => setCustomerModal(false)}
+                                        btnText="Create New"
                                     />
                                 </div>              
                                 <div className="d-flex col flex-wrap work-area-base" 
@@ -75,7 +76,7 @@ function BusinessPage()
                                     
                                     {
                                         bizz.customers.map((c) => {
-                                            return <CustomerProfile customer={c} key={c} />
+                                            return <CustomerProfile customerId={c} key={c} />
                                         })
                                     }
                                     
@@ -92,7 +93,8 @@ function BusinessPage()
                                         openModal={() => setServiceModal(true)}
                                         form={ServiceForm} 
                                         show={showServiceModal} 
-                                        onHide={() => setServiceModal(false)} 
+                                        onHide={() => setServiceModal(false)}
+                                        btnText="Create New"
                                     />
                                 </div> 
                                 <div className="d-flex col flex-wrap work-area-base" 
@@ -103,7 +105,7 @@ function BusinessPage()
 
                                     {
                                         bizz.productServices.map((c) => {
-                                            return <ProductServiceProfile ps={c} key={c} />
+                                            return <ProductServiceProfile PS_Id={c} key={c} />
                                         })
                                     }
                                 </div>

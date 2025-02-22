@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 function ServiceForm(props)
 {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDesc] = useState("");
+    const token = useSelector(state => state.token.value);
+    const {id} = useParams();
 
     function submitService(e)
     {
@@ -13,7 +18,11 @@ function ServiceForm(props)
 
         const data = {name, price, description};
 
-        console.log(data);
+        axios.post(import.meta.env.VITE_SERVER_API + "/Business/CreateNewProductService/" + id, data, {headers: {Authorization: token}})
+            .then(() => {
+                location.reload();
+            })
+            .catch((err) => console.log(err))
 
         if(props.hideModal)
         {

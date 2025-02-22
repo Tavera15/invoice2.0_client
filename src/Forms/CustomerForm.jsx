@@ -1,5 +1,8 @@
 import React, {useState} from "react";
 import { Button, Form } from "react-bootstrap";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
 
 function CustomerForm(props)
 {
@@ -10,6 +13,9 @@ function CustomerForm(props)
     const [city, setCity]                   = useState("");
     const [state, setState]                 = useState("");
     const [zipCode, setZipCode]             = useState("");
+
+    const token = useSelector(state => state.token.value);
+    const {id} = useParams();
 
     function submitCustomer(e)
     {
@@ -25,12 +31,17 @@ function CustomerForm(props)
             zipCode
         }
 
+        axios.post(import.meta.env.VITE_SERVER_API + "/Business/CreateNewCustomer/" + id, data, {headers: {Authorization: token}})
+            .then(() => {
+                location.reload();
+            })
+            .catch((err) => console.log(err))
+
         if(props.hideModal)
         {
             props.hideModal();
         }
 
-        console.log(data);
     }
 
     return(

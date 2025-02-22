@@ -6,8 +6,8 @@ function BusinessPageModal(props)
     const BizzForm = props.form;
 
     return(
-        <div>
-            <Button onClick={() => props.openModal(true)} variant="info">Create New</Button>
+        <div className="d-flex row m-0 p-0">
+            <Button onClick={() => props.openModal(true)} variant="info">{props.btnText}</Button>
 
             <Modal
                 show={props.show}

@@ -52,7 +52,8 @@ function DashboardPage()
                             openModal={() => setShowInvoiceBookModal(true)}
                             form={InvoiceBookForm} 
                             show={showInvoiceBookModal} 
-                            onHide={() => setShowInvoiceBookModal(false)} 
+                            onHide={() => setShowInvoiceBookModal(false)}
+                            btnText="Create New"
                         />
                     </div>
                     <div className="d-flex col flex-wrap container">
@@ -74,7 +75,8 @@ function DashboardPage()
                             openModal={() => setShowBusinessModal(true)}
                             form={BusinessForm} 
                             show={showBusinessModal} 
-                            onHide={() => setShowBusinessModal(false)} 
+                            onHide={() => setShowBusinessModal(false)}
+                            btnText="Create New"
                         />
                     </div>
                     <div className="d-flex col flex-wrap container">

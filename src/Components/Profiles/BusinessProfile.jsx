@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import DeleteBusinessModal from "../../Modals/DeleteBusinessModal";
 
 function BusinessProfile({id})
 {
@@ -38,7 +39,7 @@ function BusinessProfile({id})
                                 </Card.Text>
                                 <div className="d-flex row">
                                     <Link className="btn btn-primary my-2" to={"/Account/Business/" + id}>View</Link>
-                                    <Button variant="danger">Delete</Button>
+                                    <DeleteBusinessModal url="/Business/DeleteBusiness/" id={id} name={bizz.name} />
                                 </div>
                             </Card.Body>
                         </Card>
