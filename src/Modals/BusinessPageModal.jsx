@@ -7,7 +7,7 @@ function BusinessPageModal(props)
 
     return(
         <div className="d-flex row m-0 p-0">
-            <Button onClick={() => props.openModal(true)} variant="info">{props.btnText}</Button>
+            <Button onClick={() => props.openModal(true)} variant="success">{props.btnText}</Button>
 
             <Modal
                 show={props.show}

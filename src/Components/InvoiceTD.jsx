@@ -37,9 +37,10 @@ function InvoiceTD({invoiceId})
                                 <div className="col-12 col-xl-6">
                                     <button className="btn btn-primary col-12 mb-2" type="button">View</button>
                                 </div>
-                                <div className="col-12 col-xl-6">
+
+                                {/* <div className="col-12 col-xl-6">
                                     <button className="btn btn-outline-secondary col-12" type="button">Select</button>
-                                </div>
+                                </div> */}
                             </td>
                             <td className="align-middle text-start">{invoice.invoiceNumber}</td>
                             <td className="align-middle text-start">{invoice.client.name}</td>

@@ -3,12 +3,16 @@ import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import InvoiceForm from "../../Forms/InvoiceForm";
+import BusinessPageModal from "../../Modals/BusinessPageModal";
 
 function InvoiceBookProfile({id})
 {
     const [book, setBook] = useState({});
     const token = useSelector(state => state.token.value);
     const [isLoading, setIsLoading] = useState(true);
+    const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+    
 
     useEffect(() => {
 
@@ -36,7 +40,14 @@ function InvoiceBookProfile({id})
                                 <Card.Title>{book.name}</Card.Title>
                                 <Card.Text>Invoice Count: {book.invoices.length}</Card.Text>
                                 <div className="d-flex row">
-                                    <Button className="my-2" variant="success">Create Invoice</Button>
+                                    <BusinessPageModal
+                                        title="Create New Invoice"
+                                        openModal={() => setShowInvoiceModal(true)}
+                                        form={InvoiceForm} 
+                                        show={showInvoiceModal} 
+                                        onHide={() => setShowInvoiceModal(false)}
+                                        btnText="Create Invoice"
+                                    />
                                     <Link className="btn btn-primary my-2" to={"/Account/InvoiceBook/" + id}>View</Link>
                                 </div>
                             </Card.Body>
