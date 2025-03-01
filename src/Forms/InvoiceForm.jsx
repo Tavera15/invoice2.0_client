@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Button, Form, Table } from "react-bootstrap";
 
 function InvoiceForm()
@@ -11,9 +11,118 @@ function InvoiceForm()
     const [businessCity, setBusinessCity]                   = useState("");
     const [businessState, setBusinessState]                 = useState("");
     const [businessZipCode, setBusinessZipCode]             = useState("");
+    
+    const [clientName, setClientName]                       = useState("");
+    const [clientAddressLine1, setClientAddress1]           = useState("");
+    const [clientAddressLine2, setClientAddress2]           = useState("");
+    const [clientCity, setClientCity]                       = useState("");
+    const [clientState, setClientState]                     = useState("");
+    const [clientZipCode, setClientZipCode]                 = useState("");
+
+    const [serviceName, setServiceName]                     = useState("");
+    const [servicePrice, setServicePrice]                   = useState("0");
+    const [serviceQty, setServiceQty]                       = useState(1);
+    const [serviceDesc, setServiceDesc]                     = useState("");
+
+    const [services, setServices]                           = useState([]);
+    const [subTotal, setSubtotal]                           = useState("");
+    const [tax, setTax]                                     = useState(0);
+    const [Total, setTotal]                                 = useState("");
+
+    const validateValue = (val, min) => val < min ? min : val
+
+    function submitForm(e, isFinal)
+    {
+        e.preventDefault();
+
+        const data = {
+            business: {
+                name: businessName, 
+                email: businessEmail, 
+                phone: businessPhone, 
+                addressLine1: businessAddressLine1,
+                addressLine2: businessAddressLine2,
+                city: businessCity,
+                state: businessState,
+                zip: businessZipCode
+            },
+            client: {
+                name: clientName, 
+                addressLine1: clientAddressLine1,
+                addressLine2: clientAddressLine2,
+                city: clientCity,
+                state: clientState,
+                zip: clientZipCode
+            },
+            customs: services,
+            subTotal: subTotal,
+            taxes: ((subTotal * tax) / 100).toFixed(2),
+            grand_total: Total,
+            isFinal: isFinal
+        }
+
+        console.log(data)
+    }
+
+    function onAddService()
+    {
+        if(serviceName.trim() === "")
+        {
+            alert("Name cannot be empty");
+            return;
+        }
+
+        setServices(prev => [...prev, 
+            {name: serviceName,
+            price: Number.parseFloat(servicePrice).toFixed(2),
+            description: serviceDesc,
+            quantity: serviceQty.toString()}]);
+
+        onClearService();
+    }
+
+    function onClearService()
+    {
+        setServiceName("");
+        setServicePrice(0);
+        setServiceDesc("");
+        setServiceQty(1);
+    }
+
+    function removeService(e, name)
+    {
+        let res = [];
+        let isRemoved = false;
+
+        for(let i = 0; i < services.length; i++)
+        {
+            if(services[i].name + i === name && !isRemoved)
+            {
+                isRemoved = true;
+                continue;
+            }
+
+            res.push(services[i])
+        }
+
+        setServices(res);
+    }
+
+    useEffect(() => {
+        let t = 0.00;
+
+        for(let i = 0; i < services.length; i++)
+        {
+            const target = services[i];
+            t += (Number.parseFloat(target.price) * Number.parseFloat(target.quantity))
+        }
+
+        setSubtotal(t.toFixed(2));
+        setTotal((t + ((t * tax) / 100)).toFixed(2));
+    }, [services, tax, Total])
 
     return(
-        <Form className="col-12 p-4 min-vh-100 work-area-base">
+        <Form onSubmit={(e) => submitForm(e, true)} className="col-12 p-4 min-vh-100 work-area-base">
                 <h1 className="display-1 text-center">Invoice</h1>
                 
                 <hr />
@@ -89,30 +198,30 @@ function InvoiceForm()
                                 </div>
                                 <div className="form-row row">
                                     <div className="form-group mt-3">
-                                        <label htmlFor="inputBusinessName">Name</label>
-                                        <input required value={businessName || ""} onChange={(e) => setBusinessName(e.target.value)} type="text" className="form-control" id="inputBusinessName" placeholder="Name" />
+                                        <label htmlFor="inputClientName">Name</label>
+                                        <input required value={clientName || ""} onChange={(e) => setClientName(e.target.value)} type="text" className="form-control" id="inputClientName" placeholder="Name" />
                                     </div>
                                 </div>
                                 <div className="form-group mt-3">
-                                    <label htmlFor="inputBusinessAddress1">Address Line 1</label>
-                                    <input required value={businessAddressLine1 || ""} onChange={(e) => setBusinessAddress1(e.target.value)} type="text" className="form-control" id="inputBusinessAddress1" placeholder="1234 Main St" />
+                                    <label htmlFor="inputClientAddress1">Address Line 1</label>
+                                    <input required value={clientAddressLine1 || ""} onChange={(e) => setClientAddress1(e.target.value)} type="text" className="form-control" id="inputClientAddress1" placeholder="1234 Main St" />
                                 </div>
                                 <div className="form-group mt-3">
-                                    <label htmlFor="inputBusinessAddress2">Address Line 2</label>
-                                    <input value={businessAddressLine2 || ""} onChange={(e) => setBusinessAddress2(e.target.value)} type="text" className="form-control" id="inputBusinessAddress2" placeholder="Apartment, studio, or floor" />
+                                    <label htmlFor="inputClientAddress2">Address Line 2</label>
+                                    <input value={clientAddressLine2 || ""} onChange={(e) => setClientAddress2(e.target.value)} type="text" className="form-control" id="inputClientAddress2" placeholder="Apartment, studio, or floor" />
                                 </div>
                                 <div className="form-row row">
                                     <div className="form-group col-md-4 mt-3">
-                                        <label htmlFor="inputBusinessCity">City</label>
-                                        <input required value={businessCity || ""} onChange={(e) => setBusinessCity(e.target.value)} type="text" className="form-control" id="inputBusinessCity" />
+                                        <label htmlFor="inputClientCity">City</label>
+                                        <input required value={clientCity || ""} onChange={(e) => setClientCity(e.target.value)} type="text" className="form-control" id="inputClientCity" />
                                     </div>
                                     <div className="form-group col-md-4 mt-3">
-                                        <label htmlFor="inputBusinessState">State</label>
-                                        <input required value={businessState || ""} onChange={(e) => setBusinessState(e.target.value)} type="text" className="form-control" id="inputBusinessState" />
+                                        <label htmlFor="inputClientState">State</label>
+                                        <input required value={clientState || ""} onChange={(e) => setClientState(e.target.value)} type="text" className="form-control" id="inputClientState" />
                                     </div>
                                     <div className="form-group col-md-4 mt-3">
-                                        <label htmlFor="inputBusinessZip">Zip</label>
-                                        <input required value={businessZipCode || ""} onChange={(e) => setBusinessZipCode(e.target.value)} type="text" className="form-control" id="inputBusinessZip" />
+                                        <label htmlFor="inputClientZip">Zip</label>
+                                        <input required value={clientZipCode || ""} onChange={(e) => setClientZipCode(e.target.value)} type="text" className="form-control" id="inputClientZip" />
                                     </div>
                                 </div>
                             </div>
@@ -138,41 +247,41 @@ function InvoiceForm()
                                     </div>
                                 </div>
 
-                                <Form>
+                                <div role="form">
                                     <div className="form-row row">
                                         <div className="col-12">
                                             <div className="form-row row">
                                                 <div className="form-group mt-3">
                                                     <label htmlFor="serviceName">Name</label>
-                                                    <input type="text" className="form-control" id="serviceName" placeholder="Name" />
+                                                    <input value={serviceName} onChange={(e) => setServiceName(e.target.value)} type="text" className="form-control" id="serviceName" placeholder="Name" />
                                                 </div>
                                             </div>
                                             <div className="form-row row">
                                                 <div className="form-group mt-3">
                                                     <label htmlFor="price">Price</label>
-                                                    <input type="number" step="1" className="form-control" id="price" placeholder="Price" />
+                                                    <input type="number" step="0.01" value={servicePrice} onChange={(e) => setServicePrice(validateValue(e.target.value, 0))} min={0} className="form-control" id="price" placeholder="Price" />
                                                 </div>
                                             </div>
                                             <div className="form-row row">
                                                 <div className="form-group mt-3">
                                                     <label htmlFor="quantity">Quantity</label>
-                                                    <input type="number" step="1" defaultValue={1} className="form-control" min="1" id="quantity" />
+                                                    <input type="number" step="1" value={serviceQty} onChange={(e) => setServiceQty(validateValue(e.target.value, 1))} className="form-control" min="1" id="quantity" />
                                                 </div>
                                             </div>
                                             <div className="form-row row">
                                                 <div className="form-group mt-3">
                                                     <label htmlFor="description">Description</label>
-                                                    <textarea rows={4} type="text" className="form-control" id="description" placeholder="Description" />
+                                                    <textarea value={serviceDesc} onChange={(e) => setServiceDesc(e.target.value)} rows={4} type="text" className="form-control" id="description" placeholder="Description" />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="d-flex col my-4 justify-content-between">
-                                            <Button variant="primary" className="col-5">Add</Button>
-                                            <Button variant="secondary" className="col-5">Clear</Button>
+                                            <Button onClick={() => onAddService()} variant="primary" className="col-5">Add</Button>
+                                            <Button onClick={() => onClearService()} variant="secondary" className="col-5">Clear</Button>
                                         </div>
                                     </div>
-                                </Form>
+                                </div>
                             </div>
 
                             <div className="col-12 col-lg-6 d-flex row justify-content-between">
@@ -186,31 +295,19 @@ function InvoiceForm()
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Quantity</th>
-                                                <th scope="col">Description</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td className="align-middle"><button className="btn btn-danger" type="button">Delete</button></td>
-                                                <td className="align-middle">name</td>
-                                                <td className="align-middle">$10.00</td>
-                                                <td className="align-middle">1</td>
-                                                <td className="align-middle">Desc</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="align-middle"><button className="btn btn-danger" type="button">Delete</button></td>
-                                                <td className="align-middle">name</td>
-                                                <td className="align-middle">$10.00</td>
-                                                <td className="align-middle">1</td>
-                                                <td className="align-middle">Desc</td>
-                                            </tr>
-                                            <tr>
-                                                <td className="align-middle"><button className="btn btn-danger" type="button">Delete</button></td>
-                                                <td className="align-middle">name</td>
-                                                <td className="align-middle">$10.00</td>
-                                                <td className="align-middle">1</td>
-                                                <td className="align-middle">Desc</td>
-                                            </tr>
+                                            {
+                                                services.map((s, i) => {
+                                                    return  <tr key={s.name + i}>
+                                                                <td className="align-middle"><button onClick={(e) => removeService(e, s.name + i)} className="btn btn-danger" type="button">Delete</button></td>
+                                                                <td className="align-middle">{s.name}</td>
+                                                                <td className="align-middle">${s.price}</td>
+                                                                <td className="align-middle">{s.quantity}</td>
+                                                            </tr>
+                                                })
+                                            }
                                         </tbody>
                                     </Table>
                                 </div>
@@ -222,20 +319,20 @@ function InvoiceForm()
                                                 <td className="left">
                                                     <strong>Subtotal</strong>
                                                 </td>
-                                                <td className="right">$100.00</td>
+                                                <td className="right">${subTotal}</td>
                                             </tr>
                                             <tr>
                                                 <td className="left">
-                                                    <strong>Tax % <input className="bg-light text-dark col-6" defaultValue={0} type="number" step="0.01" min="0" id="inputTaxRate" /></strong>
+                                                    <strong>Tax % <input className="bg-light text-dark col-6" value={tax} onChange={(e) => setTax(e.target.value)} type="number" step="0.01" min="0" id="inputTaxRate" /></strong>
                                                 </td>
-                                                <td className="right">$0</td>
+                                                <td className="right">${((subTotal * tax) / 100).toFixed(2)}</td>
                                             </tr>
                                             <tr>
                                                 <td className="left">
                                                     <strong>Grand Total</strong>
                                                 </td>
                                                 <td className="right">
-                                                    <strong>$100.00</strong>
+                                                    <strong>${Total}</strong>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -243,7 +340,7 @@ function InvoiceForm()
                                 </div>
                                 <div className="justify-content-end align-items-end d-flex">
                                     <div className="d-flex col my-4 justify-content-between">
-                                        <Button variant="warning" className="col-5">Draft</Button>
+                                        <Button onClick={(e) => submitForm(e, false)} variant="warning" className="col-5">Draft</Button>
                                         <Button type="submit" variant="success" className="col-5">Generate</Button>
                                     </div>
                                 </div>
