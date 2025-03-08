@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import InvoiceForm from "../../Forms/InvoiceForm";
@@ -43,7 +43,8 @@ function InvoiceBookProfile({id})
                                     <BusinessPageModal
                                         title="Create New Invoice"
                                         openModal={() => setShowInvoiceModal(true)}
-                                        form={InvoiceForm} 
+                                        form={InvoiceForm}
+                                        id={id}
                                         show={showInvoiceModal} 
                                         onHide={() => setShowInvoiceModal(false)}
                                         btnText="Create Invoice"

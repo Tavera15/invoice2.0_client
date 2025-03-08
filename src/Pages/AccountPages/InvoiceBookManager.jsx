@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from "react";
 import AccountNav from "../../Components/AccountNav";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import InvoiceBookForm from "../../Forms/InvoiceBookForm";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import InvoiceTD from "../../Components/InvoiceTD";
+import BusinessPageModal from "../../Modals/BusinessPageModal";
+import InvoiceForm from "../../Forms/InvoiceForm";
 
 function InvoiceBookManager()
 {
@@ -13,6 +15,8 @@ function InvoiceBookManager()
     const token = useSelector(state => state.token.value);
     const [isLoading, setIsLoading] = useState(true);
     const {id} = useParams();
+    const [showInvoiceBookModal, setShowInvoiceBookModal] = useState(false);
+    
 
     useEffect(() => {
         function getBook()
@@ -50,7 +54,15 @@ function InvoiceBookManager()
                             <div className="d-flex justify-content-center row text-start">
                                 <div className="d-flex col justify-content-between align-items-center my-2">
                                     <h1>Invoices</h1>
-                                    <Button variant="info">New Invoice</Button>
+                                    <BusinessPageModal
+                                        title="Create New Invoice"
+                                        openModal={() => setShowInvoiceBookModal(true)}
+                                        form={InvoiceForm}
+                                        id={id} 
+                                        show={showInvoiceBookModal} 
+                                        onHide={() => setShowInvoiceBookModal(false)}
+                                        btnText="Create New"
+                                    />
                                 </div>
                                 <div className="d-flex col flex-wrap work-area-base col-12 justify-content-between " 
                                     style={{
@@ -65,12 +77,13 @@ function InvoiceBookManager()
                                                     <th scope="col" className="text-start">Actions</th>
                                                     <th scope="col" className="text-start">Invoice #</th>
                                                     <th scope="col" className="text-start">Customer Name</th>
+                                                    <th scope="col" className="text-start">Address Line 1</th>
                                                     <th scope="col" className="text-start">Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {
-                                                    book.invoices.map((i) => {
+                                                    book.invoices.reverse().map((i) => {
                                                         return <InvoiceTD invoiceId={i} key={i}/>
                                                     })
                                                 }

@@ -21,7 +21,7 @@ function DeleteBusinessModal({url, id, name})
 
     return(
         <div className="d-flex row m-0 p-0">
-            <Button onClick={() => setShow(true)} variant="danger">Delete</Button>
+            <Button onClick={() => setShow(true)} variant="outline-danger">Delete</Button>
 
             <Modal
                 show={show}

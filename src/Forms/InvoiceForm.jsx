@@ -1,8 +1,14 @@
+import axios from "axios";
 import React, {useEffect, useState} from "react";
 import { Button, Form, Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-function InvoiceForm()
+function InvoiceForm({id})
 {
+    const navigate = useNavigate();
+    const token = useSelector(state => state.token.value);
+
     const [businessName, setBusinessName]                   = useState("");
     const [businessEmail, setBusinessEmail]                 = useState("");
     const [businessPhone, setBusinessPhone]                 = useState("");
@@ -25,7 +31,7 @@ function InvoiceForm()
     const [serviceDesc, setServiceDesc]                     = useState("");
 
     const [services, setServices]                           = useState([]);
-    const [subTotal, setSubtotal]                           = useState("");
+    const [subtotal, setSubtotal]                           = useState("");
     const [tax, setTax]                                     = useState(0);
     const [Total, setTotal]                                 = useState("");
 
@@ -55,13 +61,18 @@ function InvoiceForm()
                 zip: clientZipCode
             },
             customs: services,
-            subTotal: subTotal,
-            taxes: ((subTotal * tax) / 100).toFixed(2),
+            subtotal: subtotal,
+            taxes: ((subtotal * tax) / 100).toFixed(2),
             grand_total: Total,
             isFinal: isFinal
         }
 
-        console.log(data)
+        axios.post(import.meta.env.VITE_SERVER_API + "/Invoice/CreateNewInvoice/" + id, data, {headers: {Authorization: token}})
+            .then(() => {
+                navigate("/Account/InvoiceBook/" + id)
+                location.reload();
+            })
+            .catch((err) => console.log(err))
     }
 
     function onAddService()
@@ -236,7 +247,7 @@ function InvoiceForm()
                             <div className="col-12 col-lg-6">
 
                                 <div className="form-group mb-4">
-                                    <label htmlFor="services" className="form-label"><strong>Autofill Customer</strong></label>
+                                    <label htmlFor="services" className="form-label"><strong>Autofill Service/Product</strong></label>
                                     <div>
                                         <select id="services" defaultValue={""} className="form-select" aria-label="Default select example">
                                             <option value={""} disabled>Select Service/Product</option>
@@ -319,13 +330,13 @@ function InvoiceForm()
                                                 <td className="left">
                                                     <strong>Subtotal</strong>
                                                 </td>
-                                                <td className="right">${subTotal}</td>
+                                                <td className="right">${subtotal}</td>
                                             </tr>
                                             <tr>
                                                 <td className="left">
                                                     <strong>Tax % <input className="bg-light text-dark col-6" value={tax} onChange={(e) => setTax(e.target.value)} type="number" step="0.01" min="0" id="inputTaxRate" /></strong>
                                                 </td>
-                                                <td className="right">${((subTotal * tax) / 100).toFixed(2)}</td>
+                                                <td className="right">${((subtotal * tax) / 100).toFixed(2)}</td>
                                             </tr>
                                             <tr>
                                                 <td className="left">

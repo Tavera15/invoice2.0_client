@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import DeleteBusinessModal from "../Modals/DeleteBusinessModal";
 
 function InvoiceTD({invoiceId})
 {
@@ -38,12 +39,20 @@ function InvoiceTD({invoiceId})
                                     <button className="btn btn-primary col-12 mb-2" type="button">View</button>
                                 </div>
 
-                                {/* <div className="col-12 col-xl-6">
-                                    <button className="btn btn-outline-secondary col-12" type="button">Select</button>
-                                </div> */}
+                                {
+                                    invoice.isFinal
+                                        ?   <div className="col-12 col-xl-6">
+                                                <button className="btn btn-outline-secondary col-12" type="button">Select</button>
+                                            </div>
+                                        :   <div className="col-12 col-xl-6">
+                                                <DeleteBusinessModal name={`Invoice ${invoice.invoiceNumber}`} url={`/Invoice/DeleteInvoice/${id}/`} id={invoiceId}/>
+                                            </div>
+                                }
+                                
                             </td>
                             <td className="align-middle text-start">{invoice.invoiceNumber}</td>
                             <td className="align-middle text-start">{invoice.client.name}</td>
+                            <td className="align-middle text-start">{invoice.client.addressLine1}</td>
                             <td className="align-middle text-start">{invoice.grand_total}</td>
                         </tr>
             }
