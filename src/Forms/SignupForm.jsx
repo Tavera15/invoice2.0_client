@@ -27,7 +27,7 @@ function SignUpForm({switchDisplay})
                 password: confirmPassword
             }
 
-            dispatch(userSignup(data));
+            await dispatch(userSignup(data));
             navigate("/Account/Dashboard");
         }
         else
