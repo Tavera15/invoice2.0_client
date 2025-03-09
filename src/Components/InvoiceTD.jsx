@@ -34,11 +34,6 @@ function InvoiceTD({invoiceId})
         getBizz()
     }, [isLoading, token]);
 
-    function OnEditInvoice()
-    {
-        
-    }
-
     return(
         <>
             {
