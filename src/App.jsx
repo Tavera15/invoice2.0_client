@@ -51,14 +51,6 @@ function App() {
                     </PrivateRoute>
                     }
                 />
-                <Route 
-                    exact path="/Account/Temp/:id"
-                    element={
-                    <PrivateRoute>
-                        <InvoiceBookManager />
-                    </PrivateRoute>
-                    }
-                />
               </Routes>
           </Router>
       </div>

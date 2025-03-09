@@ -35,7 +35,7 @@ function InvoiceBookProfile({id})
                 isLoading
                     ? ""
                     :   <Card>
-                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Img variant="top" src={book.logo ?? "holder.js/100px180"} style={{width: "100%", aspectRatio: "1/1", objectFit: "contain"}}/>
                             <Card.Body>
                                 <Card.Title>{book.name}</Card.Title>
                                 <Card.Text>Invoice Count: {book.invoices.length}</Card.Text>
