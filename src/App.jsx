@@ -36,7 +36,7 @@ function App() {
                     }
                 />
                 <Route 
-                    exact path="/Account/Invoice"
+                    exact path="/Account/Invoice/:id/:invoiceid"
                     element={
                     <PrivateRoute>
                         <InvoicePage />

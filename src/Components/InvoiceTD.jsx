@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import DeleteBusinessModal from "../Modals/DeleteBusinessModal";
 
 function InvoiceTD({invoiceId})
@@ -36,7 +36,7 @@ function InvoiceTD({invoiceId})
                     :   <tr>
                             <td className="align-middle">
                                 <div className="col-12 col-xl-6">
-                                    <button className="btn btn-primary col-12 mb-2" type="button">View</button>
+                                    <Link className="btn btn-primary col-12 mb-2" to={`/Account/Invoice/${id}/${invoiceId}`}>View</Link>
                                 </div>
 
                                 {
