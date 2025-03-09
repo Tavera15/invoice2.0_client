@@ -4,7 +4,7 @@ import { Button, Form, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function InvoiceForm({id})
+function InvoiceForm({id, origin})
 {
     const navigate = useNavigate();
     const token = useSelector(state => state.token.value);
@@ -35,7 +35,31 @@ function InvoiceForm({id})
     const [tax, setTax]                                     = useState(0);
     const [Total, setTotal]                                 = useState("");
 
-    const validateValue = (val, min) => val < min ? min : val
+    const validateValue = (val, min) => val < min ? min : val;
+
+    useEffect(() => {
+        if(origin)
+        {
+            setBusinessName(origin.business.name)
+            setBusinessEmail(origin.business.email)
+            setBusinessPhone(origin.business.phone)
+            setBusinessAddress1(origin.business.addressLine1)
+            setBusinessAddress2(origin.business.addressLine2)
+            setBusinessCity(origin.business.city)
+            setBusinessState(origin.business.state)
+            setBusinessZipCode(origin.business.zip)
+            setClientName(origin.client.name)
+            setClientAddress1(origin.client.addressLine1)
+            setClientAddress2(origin.client.addressLine2)
+            setClientCity(origin.client.city)
+            setClientState(origin.client.state)
+            setClientZipCode(origin.client.zip)
+            setServices(JSON.parse(origin.customs))
+            setSubtotal(Number.parseFloat(origin.subtotal))
+            setTax(Number.parseFloat(origin.subtotal) === Number.parseFloat(origin.grand_total) ? 0 : (((Number.parseFloat(origin.grand_total) / Number.parseFloat(origin.subtotal)) - 1) * 100).toFixed(2) )
+            setTotal(Number.parseFloat(origin.grand_total))
+        }
+    },[origin])
 
     function submitForm(e, isFinal)
     {
@@ -67,12 +91,24 @@ function InvoiceForm({id})
             isFinal: isFinal
         }
 
-        axios.post(import.meta.env.VITE_SERVER_API + "/Invoice/CreateNewInvoice/" + id, data, {headers: {Authorization: token}})
-            .then(() => {
-                navigate("/Account/InvoiceBook/" + id)
-                location.reload();
-            })
-            .catch((err) => console.log(err))
+        if(!origin)
+        {
+            axios.post(import.meta.env.VITE_SERVER_API + "/Invoice/CreateNewInvoice/" + id, data, {headers: {Authorization: token}})
+                .then(() => {
+                    navigate("/Account/InvoiceBook/" + id)
+                    location.reload();
+                })
+                .catch((err) => console.log(err))
+        }
+        else
+        {
+            axios.put(import.meta.env.VITE_SERVER_API + `/Invoice/UpdateInvoice/${id}/${origin._id}`, data, {headers: {Authorization: token}})
+                .then(() => {
+                    navigate("/Account/InvoiceBook/" + id)
+                    location.reload();
+                })
+                .catch((err) => console.log(err))
+        }
     }
 
     function onAddService()
@@ -130,7 +166,7 @@ function InvoiceForm({id})
 
         setSubtotal(t.toFixed(2));
         setTotal((t + ((t * tax) / 100)).toFixed(2));
-    }, [services, tax, Total])
+    }, [services, tax, Total, origin])
 
     return(
         <Form onSubmit={(e) => submitForm(e, true)} className="col-12 p-4 min-vh-100 work-area-base">

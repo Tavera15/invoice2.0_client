@@ -6,6 +6,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import FinalizedInvoice from "../../Forms/FinalizedInvoice";
 import { useReactToPrint } from "react-to-print";
+import { useNavigate } from "react-router-dom";
 
 function InvoicePage()
 {
@@ -15,7 +16,9 @@ function InvoicePage()
     const [isLoading, setIsLoading] = useState(true);
     const {id, invoiceid} = useParams();
 
+    const navigate = useNavigate();
     const contentRef = useRef();
+
     const reactToPrintFn = useReactToPrint({ contentRef, 
         documentTitle: `Invoice ${invoice.invoiceNumber}`, 
     });
@@ -25,6 +28,11 @@ function InvoicePage()
         {
             axios.get(import.meta.env.VITE_SERVER_API + `/Invoice/GetInvoice/${id}/${invoiceid}`, {headers: {Authorization: token}})
                 .then((res) => {
+                    if(!res.data.isFinal)
+                    {
+                        navigate("/Account/InvoiceBook/" + id);
+                        return
+                    }
                     setInvoice(res.data);
                     setIsLoading(false);
                 })
@@ -45,7 +53,7 @@ function InvoicePage()
                     isLoading
                         ?   ""
                         :   <div>
-                                <Button onClick={() => reactToPrintFn()} className="mb-4">Print</Button>
+                                <Button onClick={() => reactToPrintFn()} variant="outline-dark" className="mb-4">Download PDF</Button>
                                 <div className="col-12" ref={contentRef}>
                                     <FinalizedInvoice invoice={invoice}/>
                                 </div>

@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link, useParams } from 'react-router-dom';
 import DeleteBusinessModal from "../Modals/DeleteBusinessModal";
+import BusinessPageModal from "../Modals/BusinessPageModal";
+import InvoiceForm from "../Forms/InvoiceForm";
 
 function InvoiceTD({invoiceId})
 {
@@ -10,6 +12,10 @@ function InvoiceTD({invoiceId})
     const token = useSelector(state => state.token.value);
     const [isLoading, setIsLoading] = useState(true);
     const {id} = useParams();
+    const [showInvoiceModal, setInvoiceModal] = useState(false);
+
+    const openInvoiceModal = () => setInvoiceModal(true);
+    const closeInvoiceModal = () => setInvoiceModal(false);
 
     useEffect(() => {
         function getBizz()
@@ -28,6 +34,11 @@ function InvoiceTD({invoiceId})
         getBizz()
     }, [isLoading, token]);
 
+    function OnEditInvoice()
+    {
+        
+    }
+
     return(
         <>
             {
@@ -35,18 +46,36 @@ function InvoiceTD({invoiceId})
                     ? ""
                     :   <tr>
                             <td className="align-middle">
-                                <div className="col-12 col-xl-6">
-                                    <Link className="btn btn-primary col-12 mb-2" to={`/Account/Invoice/${id}/${invoiceId}`}>View</Link>
-                                </div>
 
                                 {
                                     invoice.isFinal
-                                        ?   <div className="col-12 col-xl-6">
-                                                <button className="btn btn-outline-secondary col-12" type="button">Select</button>
-                                            </div>
-                                        :   <div className="col-12 col-xl-6">
-                                                <DeleteBusinessModal name={`Invoice ${invoice.invoiceNumber}`} url={`/Invoice/DeleteInvoice/${id}/`} id={invoiceId}/>
-                                            </div>
+                                        ?   <>
+                                                <div>
+                                                    <div className="col-12 col-xl-6 mb-2">
+                                                        <Link className="btn btn-primary col-12" to={`/Account/Invoice/${id}/${invoiceId}`}>View</Link>
+                                                    </div>
+                                                </div>
+                                               <div className="col-12 col-xl-6">
+                                                    <button className="btn btn-outline-dark col-12" type="button">Select</button>
+                                                </div>
+                                            </>
+                                        :   <>
+                                                <div className="col-12 col-xl-6 mb-2">
+                                                    <BusinessPageModal 
+                                                        btnText="Edit"
+                                                        origin={invoice}
+                                                        form={InvoiceForm}
+                                                        id={id}
+                                                        title={"Edit Invoice " + invoice.invoiceNumber}
+                                                        show={showInvoiceModal}
+                                                        onHide={closeInvoiceModal}
+                                                        openModal={openInvoiceModal}
+                                                    />
+                                                </div>
+                                                <div className="col-12 col-xl-6">
+                                                    <DeleteBusinessModal name={`Invoice ${invoice.invoiceNumber}`} url={`/Invoice/DeleteInvoice/${id}/`} id={invoiceId}/>
+                                                </div>
+                                            </>
                                 }
                                 
                             </td>
