@@ -22,7 +22,6 @@ function LandingNav()
                 <Offcanvas.Body className="bg-danger text-light">
                     <Nav className="d-flex row justify-content-center">
                         <Link className="text-light display-4 undeline-on-hover" to="/">Home</Link>
-                        <Link className="text-light display-4 undeline-on-hover" to="/About">About</Link>
                         <Link className="text-light display-4 undeline-on-hover" to="/SignIn">Login / Sign Up</Link>
                     </Nav>
                 </Offcanvas.Body>

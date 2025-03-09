@@ -27,15 +27,98 @@ function InvoiceForm({id, origin})
 
     const [serviceName, setServiceName]                     = useState("");
     const [servicePrice, setServicePrice]                   = useState("0");
-    const [serviceQty, setServiceQty]                       = useState(1);
     const [serviceDesc, setServiceDesc]                     = useState("");
+    const [serviceQty, setServiceQty]                       = useState(1);
 
     const [services, setServices]                           = useState([]);
     const [subtotal, setSubtotal]                           = useState("");
     const [tax, setTax]                                     = useState(0);
     const [Total, setTotal]                                 = useState("");
 
+    const [allBizz, setAllBizz]                             = useState([]);
+    const [allBizCust, setBizCust]                          = useState([]);
+    const [allProd, setAllProd]                             = useState([]);
+    
+    const [selectedBiz, onSelectBiz]                        = useState("");
+    const [selectedCust, onSelectCust]                      = useState("");
+    const [selectedProd, onSelectProd]                      = useState("");
+
     const validateValue = (val, min) => val < min ? min : val;
+
+    useEffect(() => {
+        axios.get(import.meta.env.VITE_SERVER_API + "/Business/GetUserBusinesses/", {headers: {Authorization: token}})
+            .then((res) => {                
+                for(let i = 0; i < res.data.length; i++)
+                {
+                    axios.get(import.meta.env.VITE_SERVER_API + "/Business/GetBusiness/" + res.data[i], {headers: {Authorization: token}})
+                        .then((biz) => setAllBizz(prev => [...prev, biz.data]))
+                }
+            })
+    },[])
+
+    useEffect(() => {
+        if(selectedBiz)
+        {
+            const target = allBizz.find(b => {return b._id === selectedBiz});
+
+            setBusinessName(target.name)
+            setBusinessEmail(target.email)
+            setBusinessPhone(target.phone)
+            setBusinessAddress1(target.addressLine1)
+            setBusinessAddress2(target.addressLine2)
+            setBusinessCity(target.city)
+            setBusinessState(target.state)
+            setBusinessZipCode(target.zip)
+
+            axios.get(import.meta.env.VITE_SERVER_API + "/Business/GetAllBusinessCustomers/" + selectedBiz, {headers: {Authorization: token}})
+                .then((res) => {                
+                    for(let i = 0; i < res.data.length; i++)
+                    {
+                        axios.get(import.meta.env.VITE_SERVER_API + `/Business/GetSingleBusinessCustomer/${selectedBiz}/${res.data[i]._id}`, {headers: {Authorization: token}})
+                            .then((cust) => setBizCust(prev => [...prev, cust.data]))
+                    }
+                }
+            )
+            
+            axios.get(import.meta.env.VITE_SERVER_API + "/Business/GetAllBusinessProductServices/" + selectedBiz, {headers: {Authorization: token}})
+                .then((res) => {                
+                    for(let i = 0; i < res.data.length; i++)
+                    {
+                        axios.get(import.meta.env.VITE_SERVER_API + `/Business/GetSingleBusinessProductService/${selectedBiz}/${res.data[i]._id}`, {headers: {Authorization: token}})
+                            .then((prod) => setAllProd(prev => [...prev, prod.data]))
+                    }
+                }
+            )
+        }
+    },[selectedBiz])
+
+    useEffect(() => 
+    {
+        if(selectedCust)
+        {
+            const target = allBizCust.find(b => {return b._id === selectedCust});
+            console.log(target)
+
+            setClientName(target.name)
+            setClientAddress1(target.addressLine1)
+            setClientAddress2(target.addressLine2)
+            setClientCity(target.city)
+            setClientState(target.state)
+            setClientZipCode(target.zip)
+        }
+    }, [selectedCust])
+
+    useEffect(() =>
+    {
+        if(selectedProd)
+        {
+            const target = allProd.find(b => {return b._id === selectedProd});
+
+            setServiceName(target.name)
+            setServicePrice(target.price)
+            setServiceDesc(target.description)
+        }
+    }, [selectedProd])
 
     useEffect(() => {
         if(origin)
@@ -181,11 +264,11 @@ function InvoiceForm({id, origin})
                                 <div className="form-group mb-4">
                                     <label htmlFor="business" className="form-label"><strong>Autofill Business</strong></label>
                                     <div>
-                                        <select defaultValue={""} id="business" className="form-select" aria-label="Default select example">
+                                        <select onChange={(e) => onSelectBiz(e.target.value)} defaultValue={""} id="business" className="form-select" aria-label="Default select example">
                                             <option value={""} disabled>Select Business</option>
-                                            <option value={"1"}>Business 1</option>
-                                            <option value={"2"}>Business 2</option>
-                                            <option value={"3"}>Business 3</option>
+                                            {
+                                                allBizz.map((b) => <option key={b._id} value={b._id}>{b.name}</option>)
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -233,15 +316,20 @@ function InvoiceForm({id, origin})
                             <h1>Client Info</h1>
                             <div className="col-12">
                                 <div className="form-group mb-4">
-                                    <label htmlFor="customer" className="form-label"><strong>Autofill Customer</strong></label>
-                                    <div>
-                                        <select id="customer" defaultValue={""} className="form-select" aria-label="Default select example">
-                                            <option value={""} disabled>Select Customer</option>
-                                            <option value={"1"}>Client 1</option>
-                                            <option value={"2"}>Client 2</option>
-                                            <option value={"3"}>Client 3</option>
-                                        </select>
-                                    </div>
+                                    {
+                                        allBizCust.length < 1
+                                        ? ""
+                                        :   <div>
+                                                    <label htmlFor="customer" className="form-label"><strong>Autofill Customer</strong></label>
+                                                    <select onChange={(e) => onSelectCust(e.target.value)} id="customer" defaultValue={""} className="form-select" aria-label="Default select example">
+                                                        <option value={""} disabled>Select Customer</option>
+                                                        {
+                                                            allBizCust.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)
+                                                        }
+                                                    </select>
+                                                </div>
+                                    }
+                                    
                                 </div>
                                 <div className="form-row row">
                                     <div className="form-group mt-3">
@@ -251,7 +339,7 @@ function InvoiceForm({id, origin})
                                 </div>
                                 <div className="form-group mt-3">
                                     <label htmlFor="inputClientAddress1">Address Line 1</label>
-                                    <input required value={clientAddressLine1 || ""} onChange={(e) => setClientAddress1(e.target.value)} type="text" className="form-control" id="inputClientAddress1" placeholder="1234 Main St" />
+                                    <input value={clientAddressLine1 || ""} onChange={(e) => setClientAddress1(e.target.value)} type="text" className="form-control" id="inputClientAddress1" placeholder="1234 Main St" />
                                 </div>
                                 <div className="form-group mt-3">
                                     <label htmlFor="inputClientAddress2">Address Line 2</label>
@@ -260,15 +348,15 @@ function InvoiceForm({id, origin})
                                 <div className="form-row row">
                                     <div className="form-group col-md-4 mt-3">
                                         <label htmlFor="inputClientCity">City</label>
-                                        <input required value={clientCity || ""} onChange={(e) => setClientCity(e.target.value)} type="text" className="form-control" id="inputClientCity" />
+                                        <input value={clientCity || ""} onChange={(e) => setClientCity(e.target.value)} type="text" className="form-control" id="inputClientCity" />
                                     </div>
                                     <div className="form-group col-md-4 mt-3">
                                         <label htmlFor="inputClientState">State</label>
-                                        <input required value={clientState || ""} onChange={(e) => setClientState(e.target.value)} type="text" className="form-control" id="inputClientState" />
+                                        <input value={clientState || ""} onChange={(e) => setClientState(e.target.value)} type="text" className="form-control" id="inputClientState" />
                                     </div>
                                     <div className="form-group col-md-4 mt-3">
                                         <label htmlFor="inputClientZip">Zip</label>
-                                        <input required value={clientZipCode || ""} onChange={(e) => setClientZipCode(e.target.value)} type="text" className="form-control" id="inputClientZip" />
+                                        <input value={clientZipCode || ""} onChange={(e) => setClientZipCode(e.target.value)} type="text" className="form-control" id="inputClientZip" />
                                     </div>
                                 </div>
                             </div>
@@ -278,20 +366,24 @@ function InvoiceForm({id, origin})
                 <div>
                     <hr />
                     <div className="d-flex justify-content-center row text-center">
-                        <h1>Services</h1>
                         <div className="d-flex justify-content-center row p-0 m-0 text-start">
                             <div className="col-12 col-lg-6">
+                                <h1>Services</h1>
 
                                 <div className="form-group mb-4">
-                                    <label htmlFor="services" className="form-label"><strong>Autofill Service/Product</strong></label>
-                                    <div>
-                                        <select id="services" defaultValue={""} className="form-select" aria-label="Default select example">
-                                            <option value={""} disabled>Select Service/Product</option>
-                                            <option value={"1"}>Service 1</option>
-                                            <option value={"2"}>Service 2</option>
-                                            <option value={"3"}>Service 3</option>
-                                        </select>
-                                    </div>
+                                    {
+                                        allProd.length < 1
+                                        ? ""
+                                        :   <div>
+                                                    <label htmlFor="services" className="form-label"><strong>Autofill Services/Product</strong></label>
+                                                    <select onChange={(e) => onSelectProd(e.target.value)} id="services" defaultValue={""} className="form-select" aria-label="Default select example">
+                                                        <option value={""} disabled>Select Service/Product</option>
+                                                        {
+                                                            allProd.map((p) => <option key={p._id} value={p._id}>{p.name}</option>)
+                                                        }
+                                                    </select>
+                                                </div>
+                                    }
                                 </div>
 
                                 <div role="form">
@@ -334,7 +426,7 @@ function InvoiceForm({id, origin})
                             <div className="col-12 col-lg-6 d-flex row justify-content-between">
                                 <div className="col-12">
 
-                                    <h2 className="form-name">Invoice Details</h2>
+                                    <h1 className="form-name">Invoice Details</h1>
                                     <Table responsive border="solid">
                                         <thead>
                                             <tr>
