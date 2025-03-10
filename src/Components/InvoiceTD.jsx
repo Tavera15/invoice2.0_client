@@ -50,9 +50,9 @@ function InvoiceTD({invoiceId})
                                                         <Link className="btn btn-primary col-12" to={`/Account/Invoice/${id}/${invoiceId}`}>View</Link>
                                                     </div>
                                                 </div>
-                                               {/* <div className="col-12 col-xl-6">
-                                                    <button className="btn btn-outline-dark col-12" type="button">Select</button>
-                                                </div> */}
+                                               <div className="col-12 col-xl-6">
+                                                    <button onClick={() => navigator.clipboard.writeText(invoice.external_link !== "" ? invoice.external_link : "")} className="btn btn-info col-12" type="button">Copy Link</button>
+                                                </div>
                                             </>
                                         :   <>
                                                 <div className="col-12 col-xl-6 mb-2">

@@ -17,6 +17,7 @@ function InvoiceForm({id, origin})
     const [businessCity, setBusinessCity]                   = useState("");
     const [businessState, setBusinessState]                 = useState("");
     const [businessZipCode, setBusinessZipCode]             = useState("");
+    const [logo, setLogo]                                   = useState("");
     
     const [clientName, setClientName]                       = useState("");
     const [clientAddressLine1, setClientAddress1]           = useState("");

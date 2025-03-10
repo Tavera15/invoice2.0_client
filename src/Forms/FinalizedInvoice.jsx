@@ -10,15 +10,15 @@ function FinalizedInvoice({invoice})
                     <div className="card-header text-center">Invoice:
                         <strong> #{invoice.invoiceNumber}</strong>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body p-0">
 
-                        {/* { invoice.companyLogo !== "" && invoice.companyLogo !== null
-                            ? <div className="col-lg-12" id="logo-cont">
-                                    <img id="logo-img" src={invoice.companyLogo} alt="logo"/>
+                        { invoice.logo
+                            ?   <div className="col-12 d-flex justify-content-center py-3" id="logo">
+                                    <img className="col-6 col-lg-2" style={{"aspectRatio": "1/1", "objectFit": "contain"}} src={invoice.logo} alt="logo"/>
                                 </div>
 
-                            :<div></div>
-                        } */}
+                            :   <div></div>
+                        }
 
                         <div className="col-12 mb-4">
                             <div className="d-flex flex-wrap col">
@@ -92,9 +92,7 @@ function FinalizedInvoice({invoice})
                                 </thead>
                                 <tbody>
                                     {(JSON.parse(invoice.customs)).map((p, i) => 
-                                        <tr key={i}>
-                                            
-                                            {/* <td>{invoice.customs}</td> */}
+                                        <tr key={i}>                                 
                                             <td className="center">{i+1}</td>
                                             <td className="left">{p.name}</td>
                                             <td className="left">
