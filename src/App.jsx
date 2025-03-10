@@ -9,6 +9,7 @@ import DashboardPage from './Pages/AccountPages/DashboardPage';
 import BusinessPage from './Pages/AccountPages/BusinessPage';
 import InvoicePage from './Pages/AccountPages/InvoicePage';
 import InvoiceBookManager from './Pages/AccountPages/InvoiceBookManager';
+import ExternalInvoicePage from './Pages/AccountPages/ExternalInvoicePage';
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
                     </PrivateRoute>
                     }
                 />
+
+                <Route exact path='Account/InvoiceExternal/:id/:invoiceid/:auth' element={<ExternalInvoicePage />} />
               </Routes>
           </Router>
       </div>
