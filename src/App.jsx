@@ -10,6 +10,7 @@ import BusinessPage from './Pages/AccountPages/BusinessPage';
 import InvoicePage from './Pages/AccountPages/InvoicePage';
 import InvoiceBookManager from './Pages/AccountPages/InvoiceBookManager';
 import ExternalInvoicePage from './Pages/AccountPages/ExternalInvoicePage';
+import ProfilePage from './Pages/AccountPages/ProfilePage';
 
 function App() {
   return (
@@ -49,6 +50,14 @@ function App() {
                     element={
                     <PrivateRoute>
                         <InvoiceBookManager />
+                    </PrivateRoute>
+                    }
+                />
+                <Route 
+                    exact path="/Account/Profile"
+                    element={
+                    <PrivateRoute>
+                        <ProfilePage />
                     </PrivateRoute>
                     }
                 />

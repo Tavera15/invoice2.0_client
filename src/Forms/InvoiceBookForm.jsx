@@ -49,6 +49,15 @@ function InvoiceBookForm(props)
     return(
         <div className="d-flex justify-content-center">
             <Form className="col-12 col-md-10 col-lg-6" onSubmit={(e) => submitInvoiceBook(e)}>
+
+                {
+                    !props.origin
+                        ? ""
+                        :   <div className="form-group mt-3 mt-3">
+                                <label htmlFor="inputInvoiceBookID">InvoiceBook_ID</label>
+                                <input id="inputInvoiceBookID" required value={props.origin._id} readOnly className="form-control" />
+                            </div>
+                }
                 
                 <div className="form-group mt-3 mt-3">
                     <label htmlFor="inputName">Invoice Book Name</label>

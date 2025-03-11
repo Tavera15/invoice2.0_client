@@ -51,7 +51,8 @@ function InvoiceTD({invoiceId})
                                                     </div>
                                                 </div>
                                                <div className="col-12 col-xl-6">
-                                                    <button onClick={() => navigator.clipboard.writeText(invoice.external_link !== "" ? invoice.external_link : "")} className="btn btn-info col-12" type="button">Copy Link</button>
+                                                    <button onClick={() => navigator.clipboard.writeText(invoice.external_link !== "" ? invoice.external_link : "")} 
+                                                    className="btn btn-info col-12" type="button">Copy Link</button>
                                                 </div>
                                             </>
                                         :   <>

@@ -33,8 +33,8 @@ function AccountNav()
                 </Offcanvas.Header>
                 <Offcanvas.Body className="bg-danger text-light">
                     <Nav className="d-flex row">
-                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/">Home</Link>
                         <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Dashboard">Dashboard</Link>
+                        <Link className="text-light display-5 d-flex justify-content-start undeline-on-hover" to="/Account/Profile">Profile</Link>
                         <div onClick={(e) => handleLogout(e)} role="button" className=" d-flex justify-content-start undeline-on-hover py-0 my-0">
                             <p className="text-light display-5 py-0 my-0">Log Out</p>
                         </div>
